@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Suyog Khanal — Data Engineer &amp; Software Developer</title>
+<meta name="description" content="Portfolio of Suyog Khanal — Data Engineer &amp; Software Developer. Experience, projects, and skills.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg: #0B0F14;
+    --surface: #121820;
+    --surface-2: #1A2230;
+    --text: #E8EDF2;
+    --muted: #8B98A8;
+    --teal: #4FD1C5;
+    --amber: #F0A94E;
+    --line: #26303C;
+    --radius: 10px;
+  }
+
+  *{ box-sizing:border-box; margin:0; padding:0; }
+  html{ scroll-behavior:smooth; }
+
+  body{
+    background:var(--bg);
+    color:var(--text);
+    font-family:'Inter', sans-serif;
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+
+  ::selection{ background:var(--teal); color:#0B0F14; }
+
+  h1,h2,h3{ font-family:'Space Grotesk', sans-serif; font-weight:600; letter-spacing:-0.01em; }
+  .mono{ font-family:'JetBrains Mono', monospace; }
+
+  a{ color:inherit; text-decoration:none; }
+
+  .wrap{ max-width:1080px; margin:0 auto; padding:0 32px; }
+
+  /* ---------- Pipeline status bar ---------- */
+  .pipeline-bar{
+    position:fixed; top:0; left:0; right:0; z-index:100;
+    background:rgba(11,15,20,0.88);
+    backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--line);
+  }
+  .pipeline-track{
+    height:2px; width:100%; background:var(--surface-2);
+    position:relative; overflow:hidden;
+  }
+  .pipeline-fill{
+    height:100%; width:0%;
+    background:linear-gradient(90deg, var(--teal), var(--amber));
+    transition:width .1s linear;
+  }
+  .pipeline-stages{
+    display:flex; justify-content:space-between; align-items:center;
+    max-width:1080px; margin:0 auto; padding:14px 32px;
+  }
+  .pipeline-stages .brand{
+    font-family:'JetBrains Mono', monospace; font-size:13px; color:var(--text);
+    font-weight:600;
+  }
+  .stage-list{ display:flex; gap:26px; list-style:none; }
+  .stage-list li{
+    font-family:'JetBrains Mono', monospace; font-size:12px; letter-spacing:.04em;
+    color:var(--muted); cursor:pointer; transition:color .25s;
+    display:flex; align-items:center; gap:6px;
+  }
+  .stage-list li::before{
+    content:''; width:5px; height:5px; border-radius:50%;
+    background:var(--line); transition:background .25s;
+  }
+  .stage-list li.active{ color:var(--teal); }
+  .stage-list li.active::before{ background:var(--teal); box-shadow:0 0 8px var(--teal); }
+
+  @media (max-width:720px){ .stage-list{ display:none; } }
+
+  /* ---------- Hero ---------- */
+  .hero{
+    padding:150px 0 90px;
+    border-bottom:1px solid var(--line);
+    position:relative;
+  }
+  .hero .eyebrow{
+    font-family:'JetBrains Mono', monospace; color:var(--teal); font-size:13px;
+    margin-bottom:20px; display:block;
+  }
+  .terminal{
+    background:var(--surface);
+    border:1px solid var(--line);
+    border-radius:var(--radius);
+    max-width:620px;
+    overflow:hidden;
+    box-shadow:0 20px 60px -20px rgba(0,0,0,0.6);
+  }
+  .terminal-head{
+    display:flex; gap:7px; padding:11px 14px; border-bottom:1px solid var(--line);
+    background:var(--surface-2);
+  }
+  .terminal-head span{ width:10px; height:10px; border-radius:50%; background:#3a4557; }
+  .terminal-body{
+    padding:22px 24px 26px; font-family:'JetBrains Mono', monospace; font-size:14px;
+  }
+  .terminal-body .row{ margin-bottom:14px; }
+  .terminal-body .prompt{ color:var(--amber); }
+  .terminal-body .out{ color:var(--text); margin-left:18px; }
+  .terminal-body .out.name{ font-size:26px; font-weight:600; font-family:'Space Grotesk',sans-serif; margin:4px 0 0 18px; }
+  .terminal-body .comment{ color:var(--muted); }
+  .cursor{
+    display:inline-block; width:8px; height:16px; background:var(--teal);
+    margin-left:4px; vertical-align:middle;
+    animation:blink 1s step-end infinite;
+  }
+  @keyframes blink{ 50%{ opacity:0; } }
+
+  .hero-links{ display:flex; gap:22px; margin-top:28px; flex-wrap:wrap; }
+  .hero-links a{
+    font-family:'JetBrains Mono', monospace; font-size:13px; color:var(--muted);
+    border-bottom:1px solid transparent; padding-bottom:2px; transition:.2s;
+  }
+  .hero-links a:hover{ color:var(--teal); border-color:var(--teal); }
+
+  /* ---------- Section shared ---------- */
+  section{ padding:90px 0; border-bottom:1px solid var(--line); }
+  .section-head{ display:flex; align-items:baseline; gap:16px; margin-bottom:50px; }
+  .stage-tag{
+    font-family:'JetBrains Mono', monospace; font-size:12px; color:var(--bg);
+    background:var(--teal); padding:4px 9px; border-radius:4px; font-weight:600;
+    letter-spacing:.03em; white-space:nowrap;
+  }
+  section#projects .stage-tag{ background:var(--amber); }
+  .section-head h2{ font-size:28px; }
+  .section-sub{ font-family:'JetBrains Mono', monospace; font-size:12.5px; color:var(--muted); margin-top:6px; }
+
+  /* ---------- Extract: Education + Experience ---------- */
+  .edu-card{
+    background:var(--surface); border:1px solid var(--line); border-radius:var(--radius);
+    padding:26px 28px; margin-bottom:44px;
+  }
+  .edu-card h3{ font-size:19px; margin-bottom:4px; }
+  .edu-meta{ font-family:'JetBrains Mono', monospace; font-size:12.5px; color:var(--amber); margin-bottom:14px; }
+  .edu-card p{ color:var(--muted); font-size:14.5px; }
+  .edu-card p + p{ margin-top:8px; }
+
+  .timeline{ position:relative; padding-left:26px; }
+  .timeline::before{
+    content:''; position:absolute; left:6px; top:6px; bottom:6px; width:1px;
+    background:var(--line);
+  }
+  .job{ position:relative; padding-bottom:44px; }
+  .job:last-child{ padding-bottom:0; }
+  .job::before{
+    content:''; position:absolute; left:-26px; top:5px; width:11px; height:11px;
+    border-radius:50%; background:var(--bg); border:2px solid var(--teal);
+  }
+  .job-head{ display:flex; justify-content:space-between; align-items:baseline; flex-wrap:wrap; gap:8px; margin-bottom:4px; }
+  .job-head h3{ font-size:18px; }
+  .job-head .role{ color:var(--teal); font-weight:500; }
+  .job-date{ font-family:'JetBrains Mono', monospace; font-size:12px; color:var(--muted); }
+  .job-loc{ font-family:'JetBrains Mono', monospace; font-size:12px; color:var(--muted); margin-bottom:12px; }
+  .job ul{ list-style:none; }
+  .job li{ position:relative; padding-left:18px; color:var(--muted); font-size:14.5px; margin-bottom:7px; }
+  .job li::before{ content:'→'; position:absolute; left:0; color:var(--amber); font-size:12px; top:2px; }
+
+  /* ---------- Transform: Projects ---------- */
+  .project-grid{
+    display:grid; grid-template-columns:repeat(2, 1fr); gap:20px;
+  }
+  @media (max-width:720px){ .project-grid{ grid-template-columns:1fr; } }
+  .project-card{
+    background:var(--surface); border:1px solid var(--line); border-radius:var(--radius);
+    padding:24px; transition:border-color .25s, transform .25s;
+  }
+  .project-card:hover{ border-color:var(--amber); transform:translateY(-3px); }
+  .project-card h3{ font-size:17px; margin-bottom:6px; }
+  .project-date{ font-family:'JetBrains Mono', monospace; font-size:11.5px; color:var(--muted); margin-bottom:12px; display:block; }
+  .project-card ul{ list-style:none; margin-bottom:16px; }
+  .project-card li{ position:relative; padding-left:16px; color:var(--muted); font-size:14px; margin-bottom:6px; }
+  .project-card li::before{ content:'·'; position:absolute; left:0; color:var(--teal); font-weight:700; }
+  .stack{ display:flex; flex-wrap:wrap; gap:7px; }
+  .stack span{
+    font-family:'JetBrains Mono', monospace; font-size:11px; color:var(--teal);
+    background:rgba(79,209,197,0.08); border:1px solid rgba(79,209,197,0.25);
+    padding:3px 8px; border-radius:4px;
+  }
+
+  /* ---------- Schema: Skills ---------- */
+  .schema-table{ border:1px solid var(--line); border-radius:var(--radius); overflow:hidden; }
+  .schema-row{
+    display:grid; grid-template-columns:180px 1fr;
+    border-bottom:1px solid var(--line);
+  }
+  .schema-row:last-child{ border-bottom:none; }
+  .schema-key{
+    font-family:'JetBrains Mono', monospace; font-size:12.5px; color:var(--teal);
+    background:var(--surface); padding:18px 20px; border-right:1px solid var(--line);
+  }
+  .schema-val{
+    padding:18px 20px; color:var(--muted); font-size:14.5px; background:var(--surface-2);
+  }
+  @media (max-width:600px){
+    .schema-row{ grid-template-columns:1fr; }
+    .schema-key{ border-right:none; border-bottom:1px solid var(--line); }
+  }
+
+  .cert-list{ margin-top:44px; }
+  .cert-list h3{ font-size:14px; font-family:'JetBrains Mono', monospace; color:var(--muted); margin-bottom:18px; letter-spacing:.03em; text-transform:uppercase; font-weight:500; }
+  .cert{
+    display:flex; justify-content:space-between; gap:12px; padding:12px 0;
+    border-bottom:1px solid var(--line); font-size:14px; flex-wrap:wrap;
+  }
+  .cert:last-child{ border-bottom:none; }
+  .cert .cname{ color:var(--text); }
+  .cert .cid{ font-family:'JetBrains Mono', monospace; font-size:11.5px; color:var(--muted); }
+
+  /* ---------- Connect ---------- */
+  #connect{ border-bottom:none; padding-bottom:70px; }
+  .connect-inner{ text-align:center; }
+  .connect-inner .stage-tag{ background:var(--teal); }
+  .connect-inner h2{ font-size:32px; margin:22px 0 14px; }
+  .connect-inner p{ color:var(--muted); max-width:480px; margin:0 auto 34px; }
+  .connect-links{
+    display:flex; justify-content:center; gap:16px; flex-wrap:wrap;
+  }
+  .connect-links a{
+    font-family:'JetBrains Mono', monospace; font-size:13.5px;
+    border:1px solid var(--line); border-radius:8px; padding:11px 20px;
+    transition:.25s; color:var(--text);
+  }
+  .connect-links a:hover{ border-color:var(--teal); color:var(--teal); transform:translateY(-2px); }
+
+  footer{ text-align:center; padding:30px 0 50px; font-family:'JetBrains Mono', monospace; font-size:11.5px; color:var(--muted); }
+
+  .reveal{ opacity:0; transform:translateY(16px); transition:opacity .6s ease, transform .6s ease; }
+  .reveal.in{ opacity:1; transform:translateY(0); }
+
+  @media (prefers-reduced-motion: reduce){
+    *{ animation:none !important; transition:none !important; }
+  }
+</style>
+</head>
+<body>
+
+<div class="pipeline-bar">
+  <div class="pipeline-stages">
+    <span class="brand">suyog.pipeline<span class="cursor" style="height:12px;"></span></span>
+    <ul class="stage-list">
+      <li data-target="extract">EXTRACT</li>
+      <li data-target="projects">TRANSFORM</li>
+      <li data-target="schema">LOAD</li>
+      <li data-target="connect">CONNECT</li>
+    </ul>
+  </div>
+  <div class="pipeline-track"><div class="pipeline-fill" id="pipelineFill"></div></div>
+</div>
+
+<header class="hero wrap">
+  <span class="eyebrow mono">// pipeline_run: portfolio.suyogkhanal.dev</span>
+  <div class="terminal">
+    <div class="terminal-head"><span></span><span></span><span></span></div>
+    <div class="terminal-body">
+      <div class="row"><span class="prompt">$</span> <span class="comment">whoami</span></div>
+      <div class="out name">Suyog Khanal</div>
+      <div class="row" style="margin-top:20px"><span class="prompt">$</span> <span class="comment">cat role.txt</span></div>
+      <div class="out">Data Engineer &amp; Software Developer</div>
+      <div class="row" style="margin-top:20px"><span class="prompt">$</span> <span class="comment">echo $STATUS</span></div>
+      <div class="out">Rutgers '26 grad — building pipelines, models, and the occasional Discord bot<span class="cursor"></span></div>
+    </div>
+  </div>
+  <div class="hero-links">
+    <a href="tel:9086921690">908-692-1690</a>
+    <a href="mailto:suyogkhanal@outlook.com">suyogkhanal@outlook.com</a>
+    <a href="https://linkedin.com/in/suyog-khanal" target="_blank" rel="noopener">linkedin.com/in/suyog-khanal</a>
+    <a href="https://github.com/SuyogKhanal5" target="_blank" rel="noopener">github.com/SuyogKhanal5</a>
+  </div>
+</header>
+
+<section id="extract" class="wrap reveal">
+  <div class="section-head">
+    <span class="stage-tag">01 · EXTRACT</span>
+    <div>
+      <h2>Education &amp; Experience</h2>
+      <div class="section-sub">pulling from four internships and a double major</div>
+    </div>
+  </div>
+
+  <div class="edu-card">
+    <h3>Rutgers University – New Brunswick</h3>
+    <div class="edu-meta">BA Computer Science &amp; BA Data Science, Double Major · Graduation Jan 2026</div>
+    <p><strong style="color:var(--text)">Coursework:</strong> Deep Learning, Applied Statistical Learning, Regression Methods, Data Science, Linear Algebra, Statistics, Computer Architecture, Algorithm Analysis and Design, Systems Programming, Bayesian Data Analysis</p>
+    <p><strong style="color:var(--text)">Leadership:</strong> Rutgers Destiny — Treasurer (2023–2024), President (2024–2025)</p>
+  </div>
+
+  <div class="timeline">
+    <div class="job">
+      <div class="job-head"><h3>CareMagix <span class="role">— Software Engineer</span></h3><span class="job-date mono">Jun – Aug 2025</span></div>
+      <div class="job-loc mono">Remote</div>
+      <ul>
+        <li>Led and mentored a team of 4 developers, driving delivery of website features and defect resolution.</li>
+        <li>Built a vector-embedded LanceDB database of 70K+ diagnostic (ICD) codes, queried to map sentences to relevant codes.</li>
+        <li>Programmed a custom Python class to access and query the database; tested and deployed it to production.</li>
+      </ul>
+    </div>
+    <div class="job">
+      <div class="job-head"><h3>UBS <span class="role">— Data Engineering Intern</span></h3><span class="job-date mono">Jun – Aug 2024</span></div>
+      <div class="job-loc mono">Weehawken, NJ</div>
+      <ul>
+        <li>Used Databricks to build data pipelines; ingested and transformed data with Python and SQL into clean tables.</li>
+        <li>Automated secret rotation for application accounts, integrating it into Azure pipelines for 100+ developers.</li>
+        <li>Designed and demoed a SharePoint site that routed forms into a shared Excel sheet via Power Automate.</li>
+        <li>Built a similarity-search tool to help employees find teammates; presented it to 30+ stakeholders.</li>
+        <li>Fixed a job-dependency bug from misconfigured synchronization, cutting potential delays by 50%.</li>
+      </ul>
+    </div>
+    <div class="job">
+      <div class="job-head"><h3>Compunnel <span class="role">— Data Analysis Intern</span></h3><span class="job-date mono">Jun – Aug 2023</span></div>
+      <div class="job-loc mono">Plainsboro, NJ</div>
+      <ul>
+        <li>Built a Customer Lifetime Value prediction model using machine learning algorithms.</li>
+        <li>Analyzed 500,000+ rows of data to calculate RFM scores, segment customers, and build Power BI reports.</li>
+        <li>Queried the LinkedIn API with Python for prospect research; used the OpenAI API to draft up to 5 emails/minute.</li>
+      </ul>
+    </div>
+    <div class="job">
+      <div class="job-head"><h3>Commvault <span class="role">— Software Engineering Intern</span></h3><span class="job-date mono">May – Aug 2022</span></div>
+      <div class="job-loc mono">Tinton Falls, NJ</div>
+      <ul>
+        <li>Managed virtual machines and used Python/PowerShell to run software and OS updates across them.</li>
+        <li>Wrote a test case to automatically update 50+ VMs and manage their snapshots.</li>
+        <li>Built a database table and Python backend to manage 100+ VM allocations, plus a reporting workflow.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section id="projects" class="wrap reveal">
+  <div class="section-head">
+    <span class="stage-tag">02 · TRANSFORM</span>
+    <div>
+      <h2>Projects</h2>
+      <div class="section-sub">where the data gets interesting — mostly esports, one fighting game</div>
+    </div>
+  </div>
+
+  <div class="project-grid">
+    <div class="project-card">
+      <h3>Rank Visualization ETL Pipeline</h3>
+      <span class="project-date mono">Mar 2026</span>
+      <ul>
+        <li>Built an end-to-end player analytics platform pulling from the Riot Games API into custom graphs.</li>
+        <li>Automated ingestion with Snowflake stored procedures and Tasks that fetch and clean data on schedule.</li>
+        <li>Shipped a Streamlit-in-Snowflake dashboard with Altair visualizations for fully custom insights.</li>
+      </ul>
+      <div class="stack"><span>Python</span><span>Snowflake</span><span>SQL</span><span>APIs</span><span>Streamlit</span></div>
+    </div>
+
+    <div class="project-card">
+      <h3>Esports Game Prediction Model</h3>
+      <span class="project-date mono">Nov – Dec 2024</span>
+      <ul>
+        <li>Cleaned and analyzed ~100,000 rows of League of Legends esports data.</li>
+        <li>Built a model predicting game outcomes from only the first 15 minutes of data.</li>
+      </ul>
+      <div class="stack"><span>Python</span><span>SQL</span><span>Pandas</span></div>
+    </div>
+
+    <div class="project-card">
+      <h3>Street Fighter AI</h3>
+      <span class="project-date mono">Oct – Nov 2024</span>
+      <ul>
+        <li>Trained an agent to play Street Fighter II using OpenAI Gym.</li>
+        <li>Implemented PPO with a custom reward function to shape fighting behavior.</li>
+      </ul>
+      <div class="stack"><span>Python</span><span>OpenAI Gym</span><span>PPO</span></div>
+    </div>
+
+    <div class="project-card">
+      <h3>CNN Geoguessr</h3>
+      <span class="project-date mono">Apr – May 2025</span>
+      <ul>
+        <li>Trained a CNN to predict a photo's country of origin from Google Street View imagery.</li>
+        <li>Live-demoed the model to 50+ people; wrote up findings in a 9-page research paper.</li>
+      </ul>
+      <div class="stack"><span>Python</span><span>Google Maps API</span><span>CNN</span></div>
+    </div>
+
+    <div class="project-card" style="grid-column:1/-1;">
+      <h3>Shockwave</h3>
+      <span class="project-date mono">Jun 2022 – Aug 2024</span>
+      <ul>
+        <li>Built and launched a Discord bot that creates and manages teams for custom games and tournaments, with its own Elo system.</li>
+      </ul>
+      <div class="stack"><span>Python</span><span>SQL</span><span>MongoDB (original)</span></div>
+    </div>
+  </div>
+</section>
+
+<section id="schema" class="wrap reveal">
+  <div class="section-head">
+    <span class="stage-tag" style="background:var(--teal)">03 · LOAD</span>
+    <div>
+      <h2>Skills Schema</h2>
+      <div class="section-sub">the toolkit, typed</div>
+    </div>
+  </div>
+
+  <div class="schema-table">
+    <div class="schema-row">
+      <div class="schema-key">languages</div>
+      <div class="schema-val">Python, SQL, C, Java, R</div>
+    </div>
+    <div class="schema-row">
+      <div class="schema-key">dev_tools</div>
+      <div class="schema-val">Git, gdb, VS Code, Unix, MongoDB, HTML, Snowflake, Databricks, Azure, Power BI, MATLAB, React</div>
+    </div>
+    <div class="schema-row">
+      <div class="schema-key">frameworks</div>
+      <div class="schema-val">OpenCV, MongoDB, Docker, SharePoint, Pandas, MediaPipe, PyTorch, TensorFlow, LanceDB</div>
+    </div>
+    <div class="schema-row">
+      <div class="schema-key">concepts</div>
+      <div class="schema-val">Machine Learning, CI/CD &amp; ETL Pipelines, Reinforcement Learning, Object-Oriented Programming, AI/LLMs</div>
+    </div>
+  </div>
+
+  <div class="cert-list">
+    <h3>Certifications</h3>
+    <div class="cert"><span class="cname">Intro to Snowflake for Devs, Data Scientists, Data Engineers — Snowflake</span><span class="cid mono">0D8D7NPRHHHN · Feb 2026</span></div>
+    <div class="cert"><span class="cname">Introduction to Modern Data Engineering with Snowflake — Snowflake</span><span class="cid mono">FJM59YSC74OC · Feb 2026</span></div>
+    <div class="cert"><span class="cname">Advanced Data Engineering with Snowflake — Snowflake</span><span class="cid mono">XX9MCCAX21FW · Feb 2026</span></div>
+    <div class="cert"><span class="cname">Advanced Data Management in Azure Databricks — Packt</span><span class="cid mono">SE5LLCBILCSS · May 2026</span></div>
+  </div>
+</section>
+
+<section id="connect" class="wrap reveal">
+  <div class="connect-inner">
+    <span class="stage-tag">04 · CONNECT</span>
+    <h2>Let's build the next pipeline.</h2>
+    <p>Open to full-time data engineering and software roles starting January 2026. Reach out — I reply fast.</p>
+    <div class="connect-links">
+      <a href="mailto:suyogkhanal@outlook.com">Email</a>
+      <a href="tel:9086921690">Call</a>
+      <a href="https://linkedin.com/in/suyog-khanal" target="_blank" rel="noopener">LinkedIn</a>
+      <a href="https://github.com/SuyogKhanal5" target="_blank" rel="noopener">GitHub</a>
+    </div>
+  </div>
+</section>
+
+<footer>© 2026 Suyog Khanal · built with Python-brain, deployed on Netlify</footer>
+
+<script>
+  // Pipeline scroll progress
+  const fill = document.getElementById('pipelineFill');
+  function updateProgress(){
+    const h = document.documentElement;
+    const scrolled = h.scrollTop;
+    const max = h.scrollHeight - h.clientHeight;
+    fill.style.width = (max > 0 ? (scrolled / max) * 100 : 0) + '%';
+  }
+  document.addEventListener('scroll', updateProgress);
+  updateProgress();
+
+  // Active stage highlighting
+  const stageLis = document.querySelectorAll('.stage-list li');
+  const sections = Array.from(stageLis).map(li => document.getElementById(li.dataset.target));
+  stageLis.forEach(li => li.addEventListener('click', () => {
+    document.getElementById(li.dataset.target).scrollIntoView({behavior:'smooth'});
+  }));
+
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      const id = entry.target.id;
+      const li = document.querySelector('.stage-list li[data-target="'+id+'"]');
+      if(!li) return;
+      if(entry.isIntersecting){
+        stageLis.forEach(l => l.classList.remove('active'));
+        li.classList.add('active');
+      }
+    });
+  }, { rootMargin: '-40% 0px -50% 0px' });
+  sections.forEach(s => s && io.observe(s));
+
+  // Reveal on scroll
+  const revealEls = document.querySelectorAll('.reveal');
+  const rio = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if(entry.isIntersecting){ entry.target.classList.add('in'); rio.unobserve(entry.target); }
+    });
+  }, { threshold: 0.08 });
+  revealEls.forEach(el => rio.observe(el));
+</script>
+
+</body>
+</html>
