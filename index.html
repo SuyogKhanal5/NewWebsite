@@ -248,7 +248,7 @@
 
 <div class="pipeline-bar">
   <div class="pipeline-stages">
-    <span class="brand">suyogkhanal.com<span class="cursor" style="height:12px;"></span></span>
+    <span class="brand" id="brandHome" style="cursor:pointer;">suyogkhanal.com<span class="cursor" style="height:12px;"></span></span>
     <ul class="stage-list">
       <li data-target="extract">EXTRACT</li>
       <li data-target="transform">TRANSFORM</li>
@@ -468,6 +468,11 @@
 </section>
 
 <script>
+  // Brand click -> scroll to top
+  document.getElementById('brandHome').addEventListener('click', () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+
   // Pipeline scroll progress
   const fill = document.getElementById('pipelineFill');
   function updateProgress(){
