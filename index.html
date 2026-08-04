@@ -126,7 +126,7 @@
   .hero-links a:hover{ color:var(--teal); border-color:var(--teal); }
 
   /* ---------- Section shared ---------- */
-  section{ padding:90px 0; border-bottom:1px solid var(--line); }
+  section{ padding:90px 0; border-bottom:1px solid var(--line); scroll-margin-top:90px; }
   .section-head{ display:flex; align-items:baseline; gap:16px; margin-bottom:50px; }
   .stage-tag{
     font-family:'JetBrains Mono', monospace; font-size:12px; color:var(--bg);
@@ -251,8 +251,9 @@
     <span class="brand">suyogkhanal.com<span class="cursor" style="height:12px;"></span></span>
     <ul class="stage-list">
       <li data-target="extract">EXTRACT</li>
-      <li data-target="projects">TRANSFORM</li>
-      <li data-target="schema">LOAD</li>
+      <li data-target="transform">TRANSFORM</li>
+      <li data-target="projects">LOAD</li>
+      <li data-target="schema">SKILLS</li>
       <li data-target="connect">CONNECT</li>
     </ul>
   </div>
@@ -276,7 +277,7 @@
 
 <br>
 
-<section id="Extract" class="wrap reveal">
+<section id="extract" class="wrap reveal">
   <div class="section-head">
     <span class="stage-tag">01 · Extract</span>
     <div>
@@ -295,7 +296,7 @@
 
 <br>
 
-<section id="Transform" class="wrap reveal">
+<section id="transform" class="wrap reveal">
   <div class="section-head">
     <span class="stage-tag">02 · Transform</span>
     <div>
