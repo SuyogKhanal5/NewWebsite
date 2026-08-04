@@ -480,6 +480,12 @@
     const scrolled = h.scrollTop;
     const max = h.scrollHeight - h.clientHeight;
     fill.style.width = (max > 0 ? (scrolled / max) * 100 : 0) + '%';
+
+    // Near/at bottom of page: force-highlight the last stage (Connect)
+    if(max > 0 && scrolled >= max - 4){
+      stageLis.forEach(l => l.classList.remove('active'));
+      stageLis[stageLis.length - 1].classList.add('active');
+    }
   }
   document.addEventListener('scroll', updateProgress);
   updateProgress();
