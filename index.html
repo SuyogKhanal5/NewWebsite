@@ -468,12 +468,32 @@
 </section>
 
 <script>
+  // Shared nav-highlighting state (declared first so later code can use it immediately)
+  const stageLis = document.querySelectorAll('.stage-list li');
+  const sections = Array.from(stageLis).map(li => document.getElementById(li.dataset.target));
+
+  let manualNav = false;
+  let manualNavTimeout;
+
+  function setActive(li){
+    stageLis.forEach(l => l.classList.remove('active'));
+    if(li) li.classList.add('active');
+  }
+
+  function beginManualNav(){
+    manualNav = true;
+    clearTimeout(manualNavTimeout);
+    manualNavTimeout = setTimeout(() => { manualNav = false; }, 900);
+  }
+
   // Brand click -> scroll to top
   document.getElementById('brandHome').addEventListener('click', () => {
+    setActive(null);
+    beginManualNav();
     window.scrollTo({ top: 0, behavior: 'smooth' });
   });
 
-  // Pipeline scroll progress
+  // Pipeline scroll progress + active-section scrollspy
   const fill = document.getElementById('pipelineFill');
   function updateProgress(){
     const h = document.documentElement;
@@ -481,34 +501,38 @@
     const max = h.scrollHeight - h.clientHeight;
     fill.style.width = (max > 0 ? (scrolled / max) * 100 : 0) + '%';
 
-    // Near/at bottom of page: force-highlight the last stage (Connect)
-    if(max > 0 && scrolled >= max - 4){
-      stageLis.forEach(l => l.classList.remove('active'));
-      stageLis[stageLis.length - 1].classList.add('active');
+    if(manualNav) return;
+
+    // Determine which section is "current" using a reference line partway
+    // down the viewport, checked directly against every section's position.
+    // This runs on every scroll event, so it can't skip a short section
+    // the way a narrow IntersectionObserver trigger band can.
+    const refY = window.innerHeight * 0.45;
+    let current = null;
+    sections.forEach((sec, i) => {
+      if(!sec) return;
+      if(sec.getBoundingClientRect().top <= refY){
+        current = stageLis[i];
+      }
+    });
+
+    // At the very bottom of the page, always force the last stage (Connect),
+    // even if its reference-line crossing hasn't technically happened yet.
+    if(max > 0 && scrolled >= max - 2){
+      current = stageLis[stageLis.length - 1];
     }
+
+    if(current) setActive(current);
   }
   document.addEventListener('scroll', updateProgress);
   updateProgress();
 
-  // Active stage highlighting
-  const stageLis = document.querySelectorAll('.stage-list li');
-  const sections = Array.from(stageLis).map(li => document.getElementById(li.dataset.target));
+  // Nav clicks
   stageLis.forEach(li => li.addEventListener('click', () => {
+    setActive(li);
+    beginManualNav();
     document.getElementById(li.dataset.target).scrollIntoView({behavior:'smooth'});
   }));
-
-  const io = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      const id = entry.target.id;
-      const li = document.querySelector('.stage-list li[data-target="'+id+'"]');
-      if(!li) return;
-      if(entry.isIntersecting){
-        stageLis.forEach(l => l.classList.remove('active'));
-        li.classList.add('active');
-      }
-    });
-  }, { rootMargin: '-40% 0px -50% 0px' });
-  sections.forEach(s => s && io.observe(s));
 
   // Reveal on scroll
   const revealEls = document.querySelectorAll('.reveal');
