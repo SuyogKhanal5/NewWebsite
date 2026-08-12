@@ -179,6 +179,8 @@
   .project-card:hover{ border-color:var(--amber); transform:translateY(-3px); }
   .project-card h3{ font-size:17px; margin-bottom:6px; }
   .project-date{ font-family:'JetBrains Mono', monospace; font-size:11.5px; color:var(--muted); margin-bottom:12px; display:block; }
+  .project-link{ color:var(--teal); border-bottom:1px solid transparent; transition:.2s; }
+  .project-link:hover{ border-color:var(--teal); }
   .project-card ul{ list-style:none; margin-bottom:16px; }
   .project-card li{ position:relative; padding-left:16px; color:var(--muted); font-size:14px; margin-bottom:6px; }
   .project-card li::before{ content:'·'; position:absolute; left:0; color:var(--teal); font-weight:700; }
@@ -405,11 +407,14 @@
 
     <div class="project-card" style="grid-column:1/-1;">
       <h3>Shockwave</h3>
-      <span class="project-date mono">Jun 2022 – Aug 2024</span>
+      <span class="project-date mono">Jun 2022 – Present · <a href="https://shockwave.netlify.app" target="_blank" rel="noopener" class="project-link">shockwave.netlify.app</a></span>
       <ul>
         <li>Built and launched a Discord bot that creates and manages teams for custom games and tournaments, with its own Elo system.</li>
+        <li>Added random/draft/Elo-balanced team formation and tournament brackets for gaming communities.</li>
+        <li>Designed a gold-based betting economy and a 17-achievement trading-card cosmetic system rendered with Pillow.</li>
+        <li>Maintained reliability with a 650+ unit test suite covering game state, brackets, and economy transactions.</li>
       </ul>
-      <div class="stack"><span>Python</span><span>SQL</span><span>MongoDB (originally)</span></div>
+      <div class="stack"><span>Python</span><span>SQL</span><span>discord.py</span><span>Pillow</span><span>MongoDB (originally)</span></div>
     </div>
   </div>
 
@@ -442,6 +447,10 @@
       <div class="schema-key">concepts</div>
       <div class="schema-val">Machine Learning, CI/CD &amp; ETL Pipelines, Reinforcement Learning, Object-Oriented Programming, AI/LLMs</div>
     </div>
+    <div class="schema-row">
+      <div class="schema-key">interests</div>
+      <div class="schema-val">Music/Music Production, Fishing, Reading, Gaming</div>
+    </div>
   </div>
 
   <div class="cert-list">
@@ -463,6 +472,7 @@
       <a href="tel:9086921690">Call</a>
       <a href="https://linkedin.com/in/suyog-khanal" target="_blank" rel="noopener">LinkedIn</a>
       <a href="https://github.com/SuyogKhanal5" target="_blank" rel="noopener">GitHub</a>
+      <a href="https://suyogkhanal.com" target="_blank" rel="noopener">Website</a>
     </div>
   </div>
 </section>
